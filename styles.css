@@ -1,0 +1,31 @@
+* {
+margin: 0;
+}
+
+html {
+margin: 0;
+}
+
+body {
+margin: 0;
+}
+
+
+body {
+    background-color: white;
+}
+
+.mySlides
+{
+	display:none;
+	position:absolute;
+	width:1920px;
+	height:1080px;
+}
+
+.Text
+{
+	font-family:Verdana;
+	font-size:20px;
+	color:white;
+}
