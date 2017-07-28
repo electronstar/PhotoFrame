@@ -12,22 +12,23 @@
   <img class="mySlides" src="3.jpg">
   <img class="mySlides" src="4.jpg">
   <img class="mySlides" src="5.jpg">
-  <!-- <img class="mySlides" src="6.jpg"> -->
-  <!-- <img class="mySlides" src="7.jpg"> -->
-  <!-- <img class="mySlides" src="8.jpg"> -->
-  <!-- <img class="mySlides" src="9.jpg"> -->
+  <img class="mySlides" src="6.jpg">
+  <img class="mySlides" src="7.jpg">
+  <img class="mySlides" src="8.jpg">
+  <img class="mySlides" src="9.jpg">
   <!-- <img class="mySlides" src="10.jpg"> -->
   <!-- <img class="mySlides" src="11.jpg"> -->
   <!-- <img class="mySlides" src="12.jpg"> -->
-  <div id="extraInformation" style="opacity:0.5;position:absolute;left:1620px;top:0px;width:300px;height:1080px;background-color:CornflowerBlue">
-  <p><span class="Text" id="From"></span></p></br>
-  <p><span class="Text" id="To"></span></p></br>
-  <p><span class="Text" id="Distance"></span></p></br>
-  <p><span class="Text" id="Time"></span></p>
+  <!-- <div id="extraInformation" style="opacity:0.2;position:absolute;left:1620px;top:0px;width:300px;height:1080px;background-color:CornflowerBlue" /> -->
+  <div id="googleMap" style="opacity:.8;position:absolute;left:1600px;top:20px;width:300px;height:300px"></div>
+  <div id="extraInformation2" style="opacity:.8;position:absolute;left:1620px;top:980px;width:300px;height:100px;background-color:transparent">
+  <p class="Text">Time to Home<br>
+  <span class="Text" id="Time"></span>
+  <span class="Text" id="Distance"></span>
+  </p>
   </div>
 </div>
 
-<!-- <div id="googleMap" style="width:100%;height:400px;"></div> -->
 
 <script>
 var myIndex = 0;
@@ -44,18 +45,6 @@ function carousel() {
     if (myIndex > x.length) {myIndex = 1}    
     x[myIndex-1].style.display = "block";  
 	
-	++extraInfoDisplayed;
-	extraInfoDisplayed = extraInfoDisplayed % 2;
-	
-	var extraInfo = document.getElementById("extraInformation");
-
-	if (extraInfoDisplayed == 0) {
-		extraInfo.style.display = "block";
-	}
-	else {
-		extraInfo.style.display = "none";
-	}
-
     setTimeout(carousel, 10000); // Change image every 10 seconds
 }
 
@@ -73,12 +62,12 @@ service.getDistanceMatrix(
     unitSystem: google.maps.UnitSystem.METRIC,
     avoidHighways: false,
     avoidTolls: false,
-  }, abc);
+  }, distanceCallback);
 
   setTimeout(travelTime, 60000); // Change image every 5 * 60 seconds
 }
 
-function abc(response, status) {
+function distanceCallback(response, status) {
   if (status == 'OK') {
     var origins = response.originAddresses;
     var destinations = response.destinationAddresses;
@@ -90,30 +79,27 @@ function abc(response, status) {
         var distance = element.distance.text;
         var duration = element.duration.text;
 
-		var varFrom = document.getElementById("From");
-		var varTo = document.getElementById("To");
 		var varDistance = document.getElementById("Distance");
 		var varTime = document.getElementById("Time");
 
-		varFrom.innerHTML = '' + origins[i];
-		varTo.innerHTML = '' + destinations[j];
-		varDistance.innerHTML = 'Distance : ' + distance;
-		varTime.innerHTML = 'Time : ' + duration;
+		varDistance.innerHTML = '(' + distance + ')';
+		varTime.innerHTML = duration;
       }
     }
   }
 }
 
-<!-- function myMap() { -->
-<!-- var mapProp= { -->
-    <!-- center:new google.maps.LatLng(47.673988099999995,-122.12151199999998), -->
-    <!-- zoom:5, -->
-<!-- }; -->
-<!-- var map=new google.maps.Map(document.getElementById("googleMap"),mapProp); -->
-<!-- } -->
+function showLocation() {
+var mapProp= {
+    center:new google.maps.LatLng(47.673988099999995,-122.12151199999998),
+    zoom:5,
+};
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6Lm0-CCql9OPcQULQ2zgTND27AFZE5bA&callback=travelTime"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6Lm0-CCql9OPcQULQ2zgTND27AFZE5bA&callback=showLocation"></script> -->
 
 </body>
 </html>
